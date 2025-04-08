@@ -28,23 +28,21 @@ public class QueueService {
             Message message = new Message();
             message.setContent(messageContent);
             message.setQueue(queue);
+            message.setId(queue.getMessages().size() + 1); // Simple ID assignment
             queue.addMessage(message);
             return "Message added to queue";
         }
         return "Queue not found";
     }
 
-    public List<String> pullMessages(String queueName) {
+    public String pullMessage(String queueName) {
         Queue queue = queues.get(queueName);
-        if (queue != null) {
-            // Convert List<Message> to List<String> (message content)
-            List<String> messageContents = new ArrayList<>();
-            for (Message message : queue.getMessages()) {
-                messageContents.add(message.getContent());
-            }
-            return messageContents;
+        if (queue != null && !queue.getMessages().isEmpty()) {
+            // Retrieve and remove the first message from the queue
+            Message message = queue.getMessages().remove(0);
+            return message.getContent(); // Return the content of the message
         }
-        return Collections.emptyList();
+        return "No messages available in the queue";
     }
 
     public List<Queue> getAllQueues() {

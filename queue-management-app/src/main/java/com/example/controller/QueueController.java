@@ -25,8 +25,8 @@ public class QueueController {
     }
 
     @GetMapping("/{queueName}/messages")
-    public List<String> pullMessages(@PathVariable String queueName) {
-        return queueService.pullMessages(queueName);
+    public String pullMessage(@PathVariable String queueName) {
+        return queueService.pullMessage(queueName);
     }
 
     @GetMapping
