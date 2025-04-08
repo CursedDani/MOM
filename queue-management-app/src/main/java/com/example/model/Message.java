@@ -8,9 +8,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "queue_id", nullable = false)
-    private Queue queue;
+    private String queueName; // Store the name of the associated queue
 
     private String content;
 
@@ -23,12 +21,12 @@ public class Message {
         this.id = id;
     }
 
-    public Queue getQueue() {
-        return queue;
+    public String getQueueName() {
+        return queueName;
     }
 
-    public void setQueue(Queue queue) {
-        this.queue = queue;
+    public void setQueueName(String queueName) {
+        this.queueName = queueName;
     }
 
     public String getContent() {

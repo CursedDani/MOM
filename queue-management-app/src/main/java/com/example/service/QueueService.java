@@ -15,20 +15,20 @@ public class QueueService {
         Queue existingQueue = queues.get(queue.getName());
         if (existingQueue != null) {
             return existingQueue; // Return existing queue if it already exists
-        }else{
-        queues.put(queue.getName(), queue);
-        return queue;
+        } else {
+            queues.put(queue.getName(), queue);
+            return queue;
         }
     }
 
-    public String pushMessage(String queueid, String messageContent) {
-        Queue queue = queues.get(queueid);
+    public String pushMessage(String queueName, String messageContent) {
+        Queue queue = queues.get(queueName);
         if (queue != null) {
             // Create a new Message object and add it to the queue
             Message message = new Message();
             message.setContent(messageContent);
-            message.setQueue(queue);
             message.setId(queue.getMessages().size() + 1); // Simple ID assignment
+            message.setQueueName(queueName); // Set the queue name in the message
             queue.addMessage(message);
             return "Message added to queue";
         }

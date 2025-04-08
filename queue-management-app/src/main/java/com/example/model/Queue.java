@@ -6,26 +6,18 @@ import java.util.List;
 
 @Entity
 public class Queue {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment ID
-    private String id;
+    private String name; // Use name as the primarys key
 
-    private String name;
-
-    @OneToMany(mappedBy = "queue", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "queueName", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
-    public Queue(String id, String name) {
-        this.id = id;
+    public Queue() {
+    }
+
+    public Queue(String name) {
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
