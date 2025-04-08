@@ -1,0 +1,5 @@
+com/example/model/Queue.class
+com/example/model/Message.class
+com/example/QueueManagementApplication.class
+com/example/controller/QueueController.class
+com/example/service/QueueService.class
