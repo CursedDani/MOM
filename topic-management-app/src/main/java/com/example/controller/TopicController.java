@@ -33,4 +33,9 @@ public class TopicController {
     public List<String> subscribeToTopic(@PathVariable Long topicId) {
         return topicService.subscribeToTopic(topicId);
     }
+
+    @GetMapping
+    public List<Topic> getAllTopics() {
+        return topicService.getAllTopics();
+    }
 }
