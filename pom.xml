@@ -16,6 +16,7 @@
     <modules>
         <module>queue-management-app</module>
         <module>topic-management-app</module>
+        <module>shared</module>
     </modules>
 
     <properties>

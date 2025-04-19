@@ -2,6 +2,9 @@ package com.example.service;
 
 import com.example.model.Queue;
 import com.example.model.Message;
+import com.example.repository.QueueRepository;
+import com.example.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,16 +12,30 @@ import java.util.*;
 @Service
 public class QueueService {
 
+    @Autowired
+    private QueueRepository queueRepository;
+
     private final Map<String, Queue> queues = new HashMap<>();
 
-    public Queue createQueue(Queue queue) {
-        Queue existingQueue = queues.get(queue.getName());
-        if (existingQueue != null) {
-            return existingQueue; // Return existing queue if it already exists
-        } else {
-            queues.put(queue.getName(), queue);
-            return queue;
+    public Queue createQueue(Queue queue, User owner) {
+        // Check if a queue with the same name already exists
+        if (queueRepository.findByName(queue.getName()).isPresent()) {
+            throw new RuntimeException("Queue with the same name already exists");
         }
+
+        queue.setOwner(owner);
+        return queueRepository.save(queue);
+    }
+
+    public void deleteQueue(String queueName, User owner) {
+        Queue queue = queueRepository.findByName(queueName)
+                .orElseThrow(() -> new RuntimeException("Queue not found"));
+
+        if (!queue.getOwner().equals(owner)) {
+            throw new RuntimeException("You are not authorized to delete this queue");
+        }
+
+        queueRepository.delete(queue);
     }
 
     public String pushMessage(String queueName, String messageContent) {

@@ -13,6 +13,10 @@ public class Queue {
     @OneToMany(mappedBy = "queueName", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     public Queue() {
     }
 
@@ -41,5 +45,14 @@ public class Queue {
             return messages.remove(0);
         }
         return null;
+    }
+
+    // Getter and Setter for owner
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

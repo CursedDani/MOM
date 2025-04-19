@@ -16,6 +16,10 @@ public class Topic {
     @ElementCollection
     private List<String> messages = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -39,5 +43,13 @@ public class Topic {
 
     public void setMessages(List<String> messages) {
         this.messages = messages;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
