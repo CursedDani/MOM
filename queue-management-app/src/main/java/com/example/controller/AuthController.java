@@ -6,6 +6,7 @@ import com.example.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -45,7 +46,7 @@ public class AuthController {
         newUser.setUsername(registerRequest.getUsername());
         newUser.setPassword(registerRequest.getPassword()); // In a real app, hash the password
         userRepository.save(newUser);
-
+        System.out.println("hola");
         // Generate a token for the new user
         return jwtUtil.generateToken(newUser.getUsername());
     }

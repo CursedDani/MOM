@@ -21,6 +21,7 @@ public class QueueController {
 
     @PostMapping
     public Queue createQueue(@RequestBody Queue queue) {
+        System.out.println("Createq");
         // Get the authenticated user
         User user = authService.getAuthenticatedUser();
         return queueService.createQueue(queue, user);

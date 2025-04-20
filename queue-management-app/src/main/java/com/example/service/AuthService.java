@@ -14,9 +14,18 @@ public class AuthService {
     private UserRepository userRepository;
 
     public User getAuthenticatedUser() {
-        // Get the authenticated user's details
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByUsername(userDetails.getUsername())
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            username = (String) principal; // When principal is just the username
+        } else {
+            throw new RuntimeException("Unable to retrieve authenticated user");
+        }
+
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
