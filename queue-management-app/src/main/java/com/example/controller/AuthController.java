@@ -55,4 +55,11 @@ public class AuthController {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @GetMapping("/usernames")
+    public List<String> getAllUsernames() {
+        return userRepository.findAll().stream()
+                .map(User::getUsername)
+                .toList();
+    }
 }

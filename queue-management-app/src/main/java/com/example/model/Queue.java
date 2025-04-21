@@ -8,7 +8,7 @@ import java.util.List;
 public class Queue {
 
     @Id
-    private String name; // Use name as the primarys key
+    private String name; // Use name as the primary key
 
     @OneToMany(mappedBy = "queueName", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
@@ -16,6 +16,10 @@ public class Queue {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @ManyToOne
+    @JoinColumn(name = "connected_user_id")
+    private User connectedUser; // The user who can pull messages
 
     public Queue() {
     }
@@ -54,5 +58,14 @@ public class Queue {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    // Getters and Setters for connectedUser
+    public User getConnectedUser() {
+        return connectedUser;
+    }
+
+    public void setConnectedUser(User connectedUser) {
+        this.connectedUser = connectedUser;
     }
 }
